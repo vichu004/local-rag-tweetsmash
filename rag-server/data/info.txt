@@ -1,0 +1,3 @@
+OpenClaw is an AI automation platform.
+Chatwoot is a customer support tool.
+RAG helps in retrieving knowledge from documents.
