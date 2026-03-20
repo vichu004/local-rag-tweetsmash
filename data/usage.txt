@@ -1,0 +1,9 @@
+Tweetsmash Usage Workflow
+
+1. Import Twitter bookmarks
+2. System organizes content automatically
+3. Query bookmarks using AI
+4. Generate summaries or insights
+5. Consume structured content
+
+This workflow helps manage large volumes of tweets efficiently.

@@ -1,0 +1,16 @@
+Tweetsmash Features
+
+AI Chat:
+Interact with bookmarks using AI to extract insights.
+
+Auto Organization:
+Categorizes tweets by topic, author, and content.
+
+Digest Generation:
+Creates summaries and newsletters from bookmarks.
+
+Recipe Filtering:
+Filters content by themes or writing styles.
+
+Content Structuring:
+Converts unstructured tweets into readable knowledge.

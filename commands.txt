@@ -1,0 +1,11 @@
+to check test the rag pipeline 
+
+{ request : " curl -X POST http://localhost:3500/chat \
+  -H "Content-Type: application/json" \
+  -d '{"query": "What is OpenClaw?"}' "
+}
+
+
+for running the database ( imp : before this command don't forget to activate the py-env created )
+
+command : " chroma run --path ./chroma_data "

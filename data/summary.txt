@@ -1,0 +1,11 @@
+Tweetsmash Summary
+
+Tweetsmash is an AI platform that transforms Twitter bookmarks into structured knowledge.
+
+It provides:
+- AI analysis
+- Bookmark organization
+- Digest generation
+- API access
+
+It improves productivity and enables efficient knowledge extraction.

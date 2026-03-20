@@ -1,0 +1,7 @@
+Tweetsmash Integrations
+
+- Notion: Export structured insights
+- Google Sheets: Store and analyze data
+- Webhooks: Trigger automations
+- n8n: Build workflows
+- MCP: Advanced AI integrations

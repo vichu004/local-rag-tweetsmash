@@ -1,0 +1,7 @@
+Tweetsmash Resources
+
+Tweetsmash transforms Twitter bookmarks into structured knowledge.
+
+Users can analyze tweets, extract insights, and generate readable summaries or digests.
+
+The platform allows AI-based querying of bookmarks and exporting structured data to external tools.

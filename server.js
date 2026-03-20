@@ -1,7 +1,7 @@
 import express from "express";
-import { OpenAI } from "langchain/llms/openai";
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { Chroma } from "langchain/vectorstores/chroma";
+import { Ollama } from "@langchain/ollama";
+import { OllamaEmbeddings } from "@langchain/ollama";
+import { Chroma } from "@langchain/community/vectorstores/chroma";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-const embeddings = new OpenAIEmbeddings();
+const embeddings = new OllamaEmbeddings({ model: "mistral" });
 
 app.post("/chat", async (req, res) => {
   const { query } = req.body;
@@ -20,13 +20,13 @@ app.post("/chat", async (req, res) => {
   );
 
   const retriever = vectorStore.asRetriever();
-  const docs = await retriever.getRelevantDocuments(query);
+  const docs = await retriever.invoke(query);
 
   const context = docs.map(d => d.pageContent).join("\n");
 
-  const model = new OpenAI({ temperature: 0 });
+  const model = new Ollama({ model: "mistral", temperature: 0 });
 
-  const answer = await model.call(`
+  const answer = await model.invoke(`
 Answer using context:
 ${context}
 
@@ -37,6 +37,6 @@ ${query}
   res.json({ answer });
 });
 
-app.listen(3000, () => {
-  console.log("🚀 RAG server running on port 3000");
+app.listen(3500, () => {
+  console.log("🚀 RAG server running on port 3500");
 });

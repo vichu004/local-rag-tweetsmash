@@ -1,0 +1,17 @@
+===== HOMEPAGE =====
+Tweetsmash is an AI-powered platform that helps users manage Twitter bookmarks and extract insights.
+
+===== API =====
+Bearer authentication, bookmark endpoints, label management, rate limits, and integrations.
+
+===== FEATURES =====
+AI chat, auto organization, digest generation, filtering.
+
+===== USAGE =====
+Import → organize → query → generate insights.
+
+===== INTEGRATIONS =====
+Notion, Google Sheets, Webhooks, n8n, MCP.
+
+===== SUMMARY =====
+Transforms unstructured tweets into structured knowledge using AI.

@@ -1,0 +1,7 @@
+Tweetsmash Homepage Overview
+
+Tweetsmash is an AI-powered platform designed to help users manage and extract value from their Twitter bookmarks. It transforms saved tweets into structured knowledge and actionable insights.
+
+The platform improves productivity by organizing unstructured content into readable formats. Users can interact with bookmarks using AI for faster discovery and understanding.
+
+It is widely used by creators, developers, marketers, and knowledge workers.

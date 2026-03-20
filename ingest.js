@@ -1,23 +1,45 @@
-import { readFileSync } from "fs";
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { Chroma } from "langchain/vectorstores/chroma";
+import { readFileSync, readdirSync } from "fs";
+import path from "path";
+import { OllamaEmbeddings } from "@langchain/ollama";
+import { Chroma } from "@langchain/community/vectorstores/chroma";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const run = async () => {
-  const text = readFileSync("./data/info.txt", "utf-8");
+  const dataDir = "./data";
+  
+  // Read all .txt files from the data directory
+  const files = readdirSync(dataDir).filter(file => file.endsWith('.txt'));
+  
+  if (files.length === 0) {
+    console.log("❌ No .txt files found in ./data/");
+    return;
+  }
 
-  const embeddings = new OpenAIEmbeddings();
+  const embeddings = new OllamaEmbeddings({ model: "mistral" });
+  
+  const texts = [];
+  const metadatas = [];
+
+  for (const file of files) {
+    const filePath = path.join(dataDir, file);
+    const content = readFileSync(filePath, "utf-8");
+    texts.push(content);
+    metadatas.push({ source: file });
+    console.log(`📄 Read ${file}`);
+  }
+
+  console.log(`⏳ Ingesting ${files.length} documents into Chroma...`);
 
   await Chroma.fromTexts(
-    [text],
-    [{ source: "info.txt" }],
+    texts,
+    metadatas,
     embeddings,
     { collectionName: "rag-collection" }
   );
 
-  console.log("✅ Data ingested successfully");
+  console.log("✅ All data ingested successfully!");
 };
 
 run();
