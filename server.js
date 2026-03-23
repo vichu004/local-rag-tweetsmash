@@ -1,7 +1,7 @@
 import express from "express";
-import { Ollama } from "@langchain/ollama";
+import { ChatOpenAI } from "@langchain/openai";
 import { OllamaEmbeddings } from "@langchain/ollama";
-import { Chroma } from "@langchain/community/vectorstores/chroma";
+import { CloudClient } from "chromadb";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -9,25 +9,62 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
-const CHROMA_URL = process.env.CHROMA_URL || "http://localhost:8000";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
-const embeddings = new OllamaEmbeddings({ model: "mistral", baseUrl: OLLAMA_BASE_URL });
+const client = new CloudClient({
+  tenant: process.env.CHROMA_TENANT,
+  database: process.env.CHROMA_DATABASE,
+  apiKey: process.env.CHROMA_API_KEY,
+});
 
 app.post("/chat", async (req, res) => {
   const { query } = req.body;
 
-  const vectorStore = await Chroma.fromExistingCollection(
-    embeddings,
-    { collectionName: "rag-collection", url: CHROMA_URL }
-  );
+  class LocalOllamaEmbeddingFunction {
+    constructor() {
+      this.embeddings = new OllamaEmbeddings({ model: "mistral", baseUrl: "http://localhost:11434" });
+    }
+    async generate(texts) {
+      if (!Array.isArray(texts)) texts = [texts];
+      return await this.embeddings.embedDocuments(texts);
+    }
+  }
 
-  const retriever = vectorStore.asRetriever();
-  const docs = await retriever.invoke(query);
+  const collection = await client.getCollection({ 
+    name: "tweetsmash-user",
+    embeddingFunction: new LocalOllamaEmbeddingFunction()
+  });
 
-  const context = docs.map(d => d.pageContent).join("\n");
+  const results = await collection.query({
+    queryTexts: [query],
+    nResults: 5
+  });
 
-  const model = new Ollama({ model: "mistral", temperature: 0, baseUrl: OLLAMA_BASE_URL });
+  // GroupBy is conceptually handled via the SDK or manual deduplication 
+  // if you want to deduplicate by source_id. Let's extract unique contents directly.
+  let uniqueDocs = [];
+  let seenSources = new Set();
+  
+  if (results.documents && results.documents[0]) {
+    results.documents[0].forEach((doc, i) => {
+      const sourceId = results.metadatas[0][i].source_id;
+      if (!seenSources.has(sourceId)) {
+        seenSources.add(sourceId);
+        uniqueDocs.push(doc);
+      }
+    });
+  }
+
+  const context = uniqueDocs.join("\n\n---\n\n");
+
+  const model = new ChatOpenAI({
+    modelName: process.env.OPENROUTER_LLM_MODEL || "meta-llama/llama-3-8b-instruct:free",
+    temperature: 0,
+    apiKey: OPENROUTER_API_KEY,
+    configuration: {
+      baseURL: "https://openrouter.ai/api/v1",
+    }
+  });
 
   const answer = await model.invoke(`
 Answer using context:

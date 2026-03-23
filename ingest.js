@@ -1,13 +1,14 @@
 import { readFileSync, readdirSync } from "fs";
 import path from "path";
-import { OllamaEmbeddings } from "@langchain/ollama";
+import { OpenAIEmbeddings } from "@langchain/openai";
 import { Chroma } from "@langchain/community/vectorstores/chroma";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const CHROMA_URL = process.env.CHROMA_URL || "http://localhost:8000";
+const CHROMA_AUTH_TOKEN = process.env.CHROMA_AUTH_TOKEN;
 
 const run = async () => {
   const dataDir = "./data";
@@ -20,7 +21,13 @@ const run = async () => {
     return;
   }
 
-  const embeddings = new OllamaEmbeddings({ model: "mistral", baseUrl: OLLAMA_BASE_URL });
+  const embeddings = new OpenAIEmbeddings({
+    modelName: process.env.OPENROUTER_EMBEDDING_MODEL || "nomic-ai/nomic-embed-text-v1.5",
+    openAIApiKey: OPENROUTER_API_KEY,
+    configuration: {
+      baseURL: "https://openrouter.ai/api/v1",
+    }
+  });
   
   const texts = [];
   const metadatas = [];
@@ -35,12 +42,12 @@ const run = async () => {
 
   console.log(`⏳ Ingesting ${files.length} documents into Chroma...`);
 
-  await Chroma.fromTexts(
-    texts,
-    metadatas,
-    embeddings,
-    { collectionName: "rag-collection", url: CHROMA_URL }
-  );
+  const chromaConfig = { collectionName: "rag-collection", url: CHROMA_URL };
+  if (CHROMA_AUTH_TOKEN) {
+    chromaConfig.headers = { "Authorization": `Bearer ${CHROMA_AUTH_TOKEN}` };
+  }
+
+  await Chroma.fromTexts(texts, metadatas, embeddings, chromaConfig);
 
   console.log("✅ All data ingested successfully!");
 };
