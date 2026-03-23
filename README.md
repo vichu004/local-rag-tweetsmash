@@ -48,3 +48,28 @@ curl -X POST http://localhost:3500/chat \
 ```
 
 *(You can also use the local `node query.js` file if you have Node installed on your host machine to run quick tests).*
+
+---
+
+## 🛠️ Installing Ollama & Models
+
+If you don't have Ollama installed on your system yet, follow these steps:
+
+### 1. Install Ollama
+**For Linux/WSL2:**
+Run the following curl command in your terminal:
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+**For macOS/Windows:**
+Download the installer directly from the [Ollama website](https://ollama.com/download).
+
+### 2. Install the Mistral Model
+Once Ollama is installed and running, you must download the `mistral` model (which this RAG server uses for generating answers).
+
+Open your terminal and run:
+```bash
+ollama run mistral
+```
+*(Depending on your internet connection, this ~4GB download may take a few minutes. Once it completes, you can exit the chat prompt or keep it running in the background).*
