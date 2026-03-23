@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  rag-server:
+    build: .
+    image: local-rag
+    container_name: local-rag
+    ports:
+      - "3500:3500"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - CHROMA_URL=http://chroma:8000
+    depends_on:
+      - chroma
+      - ollama
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  chroma:
+    image: chromadb/chroma:latest
+    container_name: chroma
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./chroma_data:/chroma/chroma
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  ollama_data:

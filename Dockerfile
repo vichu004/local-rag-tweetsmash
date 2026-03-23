@@ -1,5 +1,5 @@
 # Use Node base image
-FROM node:18
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
@@ -13,8 +13,8 @@ RUN npm install
 # Copy all files
 COPY . .
 
-# Expose port (your backend port)
-EXPOSE 5000
+# Expose backend port
+EXPOSE 3500
 
 # Start server
 CMD ["npm", "start"]

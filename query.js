@@ -5,12 +5,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
+const CHROMA_URL = process.env.CHROMA_URL || "http://localhost:8000";
+
 const run = async () => {
-  const embeddings = new OllamaEmbeddings({ model: "mistral" });
+  const embeddings = new OllamaEmbeddings({ model: "mistral", baseUrl: OLLAMA_BASE_URL });
 
   const vectorStore = await Chroma.fromExistingCollection(
     embeddings,
-    { collectionName: "rag-collection" }
+    { collectionName: "rag-collection", url: CHROMA_URL }
   );
 
   const retriever = vectorStore.asRetriever();
@@ -21,7 +24,7 @@ const run = async () => {
 
   const context = docs.map(d => d.pageContent).join("\n");
 
-  const model = new Ollama({ model: "mistral", temperature: 0 });
+  const model = new Ollama({ model: "mistral", temperature: 0, baseUrl: OLLAMA_BASE_URL });
 
   const response = await model.invoke(`
 Answer the question using the context below:

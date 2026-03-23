@@ -6,6 +6,9 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
+const CHROMA_URL = process.env.CHROMA_URL || "http://localhost:8000";
+
 const run = async () => {
   const dataDir = "./data";
   
@@ -17,7 +20,7 @@ const run = async () => {
     return;
   }
 
-  const embeddings = new OllamaEmbeddings({ model: "mistral" });
+  const embeddings = new OllamaEmbeddings({ model: "mistral", baseUrl: OLLAMA_BASE_URL });
   
   const texts = [];
   const metadatas = [];
@@ -36,7 +39,7 @@ const run = async () => {
     texts,
     metadatas,
     embeddings,
-    { collectionName: "rag-collection" }
+    { collectionName: "rag-collection", url: CHROMA_URL }
   );
 
   console.log("✅ All data ingested successfully!");
