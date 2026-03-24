@@ -1,19 +1,19 @@
 import { readFileSync, readdirSync } from "fs";
 import path from "path";
+import { CloudClient } from "chromadb";
 import { OpenAIEmbeddings } from "@langchain/openai";
-import { Chroma } from "@langchain/community/vectorstores/chroma";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
-const CHROMA_URL = process.env.CHROMA_URL || "http://localhost:8000";
-const CHROMA_AUTH_TOKEN = process.env.CHROMA_AUTH_TOKEN;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const CHROMA_TENANT = process.env.CHROMA_TENANT;
+const CHROMA_DATABASE = process.env.CHROMA_DATABASE;
+const CHROMA_API_KEY = process.env.CHROMA_API_KEY;
 
 const run = async () => {
   const dataDir = "./data";
   
-  // Read all .txt files from the data directory
   const files = readdirSync(dataDir).filter(file => file.endsWith('.txt'));
   
   if (files.length === 0) {
@@ -21,35 +21,61 @@ const run = async () => {
     return;
   }
 
-  const embeddings = new OpenAIEmbeddings({
-    modelName: process.env.OPENROUTER_EMBEDDING_MODEL || "nomic-ai/nomic-embed-text-v1.5",
-    openAIApiKey: OPENROUTER_API_KEY,
-    configuration: {
-      baseURL: "https://openrouter.ai/api/v1",
-    }
+  const client = new CloudClient({
+    tenant: CHROMA_TENANT,
+    database: CHROMA_DATABASE,
+    apiKey: CHROMA_API_KEY,
   });
-  
+
+  class OpenAIEmbeddingFunction {
+    constructor() {
+      this.embeddings = new OpenAIEmbeddings({
+        modelName: process.env.OPENROUTER_EMBEDDING_MODEL || "text-embedding-3-small",
+        openAIApiKey: OPENAI_API_KEY,
+      });
+    }
+    async generate(texts) {
+      if (!Array.isArray(texts)) texts = [texts];
+      return await this.embeddings.embedDocuments(texts);
+    }
+  }
+
+  const collectionName = "tweetsmash-user";
+
+  console.log(`🧹 Resetting collection ${collectionName} to ensure correct dimensions...`);
+  try {
+    await client.deleteCollection({ name: collectionName });
+  } catch (e) {
+    console.log("ℹ️ Collection didn't exist or already deleted.");
+  }
+
+  const collection = await client.getOrCreateCollection({ 
+    name: collectionName,
+    embeddingFunction: new OpenAIEmbeddingFunction()
+  });
+
   const texts = [];
+  const ids = [];
   const metadatas = [];
 
   for (const file of files) {
     const filePath = path.join(dataDir, file);
     const content = readFileSync(filePath, "utf-8");
     texts.push(content);
+    ids.push(file);
     metadatas.push({ source: file });
-    console.log(`📄 Read ${file}`);
+    console.log(`📄 Prepared ${file}`);
   }
 
-  console.log(`⏳ Ingesting ${files.length} documents into Chroma...`);
+  console.log(`⏳ Ingesting ${files.length} documents into Chroma Cloud...`);
 
-  const chromaConfig = { collectionName: "rag-collection", url: CHROMA_URL };
-  if (CHROMA_AUTH_TOKEN) {
-    chromaConfig.headers = { "Authorization": `Bearer ${CHROMA_AUTH_TOKEN}` };
-  }
+  await collection.add({
+    ids: ids,
+    documents: texts,
+    metadatas: metadatas
+  });
 
-  await Chroma.fromTexts(texts, metadatas, embeddings, chromaConfig);
-
-  console.log("✅ All data ingested successfully!");
+  console.log("✅ All data ingested successfully into the cloud!");
 };
 
-run();
+run().catch(console.error);

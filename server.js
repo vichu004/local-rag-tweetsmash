@@ -1,6 +1,5 @@
 import express from "express";
-import { ChatOpenAI } from "@langchain/openai";
-import { OllamaEmbeddings } from "@langchain/ollama";
+import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { CloudClient } from "chromadb";
 import dotenv from "dotenv";
 
@@ -20,9 +19,12 @@ const client = new CloudClient({
 app.post("/chat", async (req, res) => {
   const { query } = req.body;
 
-  class LocalOllamaEmbeddingFunction {
+  class OpenAIEmbeddingFunction {
     constructor() {
-      this.embeddings = new OllamaEmbeddings({ model: "mistral", baseUrl: "http://localhost:11434" });
+      this.embeddings = new OpenAIEmbeddings({
+        modelName: process.env.OPENROUTER_EMBEDDING_MODEL || "text-embedding-3-small",
+        openAIApiKey: process.env.OPENAI_API_KEY,
+      });
     }
     async generate(texts) {
       if (!Array.isArray(texts)) texts = [texts];
@@ -32,7 +34,7 @@ app.post("/chat", async (req, res) => {
 
   const collection = await client.getCollection({ 
     name: "tweetsmash-user",
-    embeddingFunction: new LocalOllamaEmbeddingFunction()
+    embeddingFunction: new OpenAIEmbeddingFunction()
   });
 
   const results = await collection.query({

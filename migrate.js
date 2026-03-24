@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from "fs";
 import path from "path";
 import { CloudClient } from "chromadb";
-import { OllamaEmbeddings } from "@langchain/ollama";
+import { OpenAIEmbeddings } from "@langchain/openai";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,12 +15,14 @@ async function run() {
     apiKey: process.env.CHROMA_API_KEY,
   });
 
-  // Sharding conceptually by an organization or user. 
   const collectionName = "tweetsmash-user";
   
-  class LocalOllamaEmbeddingFunction {
+  class OpenAIEmbeddingFunction {
     constructor() {
-      this.embeddings = new OllamaEmbeddings({ model: "mistral", baseUrl: "http://localhost:11434" });
+      this.embeddings = new OpenAIEmbeddings({
+        modelName: process.env.OPENROUTER_EMBEDDING_MODEL || "text-embedding-3-small",
+        openAIApiKey: process.env.OPENAI_API_KEY,
+      });
     }
     async generate(texts) {
       if (!Array.isArray(texts)) texts = [texts];
@@ -28,9 +30,18 @@ async function run() {
     }
   }
 
+  // Handle dimension mismatch by resetting the collection
+  console.log(`🧹 Checking collection ${collectionName}...`);
+  try {
+    await client.deleteCollection({ name: collectionName });
+    console.log("✅ Existing collection deleted to reset dimensions.");
+  } catch (e) {
+    console.log("ℹ️ Starting with a fresh collection.");
+  }
+
   const collection = await client.getOrCreateCollection({
     name: collectionName,
-    embeddingFunction: new LocalOllamaEmbeddingFunction(),
+    embeddingFunction: new OpenAIEmbeddingFunction(),
   });
 
   const dataDir = "./data";
@@ -47,7 +58,6 @@ async function run() {
     const filePath = path.join(dataDir, file);
     const content = readFileSync(filePath, "utf-8");
     
-    // Line-based chunking strategy respecting the 16KiB limit
     const lines = content.split('\n');
     let currentChunk = "";
     let chunkIndex = 0;
@@ -64,7 +74,6 @@ async function run() {
       currentChunk += line + '\n';
     }
     
-    // Add the final remaining chunk
     if (currentChunk.trim().length > 0) {
       chunks.push({ text: currentChunk, index: chunkIndex });
     }
