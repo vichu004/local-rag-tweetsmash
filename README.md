@@ -1,44 +1,67 @@
-# Local RAG Server
+# RAG Server (Chroma Cloud + OpenRouter)
 
-This is an AI-powered RAG (Retrieval-Augmented Generation) application built using Node.js, Langchain, Express, ChromaDB, and Ollama. 
+This is a high-performance AI-powered RAG (Retrieval-Augmented Generation) application built using Node.js, Langchain, Express, Chroma Cloud, and OpenRouter.
 
-It uses ChromaDB within Docker to store your vector embeddings and connects to your computer's local Ollama instance (running the `mistral` model) to handle processing.
+It uses **Chroma Cloud** for vector storage and **OpenRouter** (Llama 3 / OpenAI) for embeddings and LLM responses.
 
 ---
 
 ## 🚀 Prerequisites
 
-1. **Docker & Docker Compose** installed
-2. **Ollama** installed and running on your physical machine
+1. **Node.js & npm** installed (or Docker)
+2. **OpenRouter API Key**
+3. **Chroma Cloud Account** (Tenant, Database, and API Key)
 
 ## 📦 Getting Started
 
-### 1. Download the AI Model
-Since the application relies on your local Ollama installation, make sure the `mistral` model is available:
+### 1. Environment Setup
+Clone the repository and create a `.env` file from the template:
+
 ```bash
-ollama pull mistral
+cp .env.example .env
 ```
 
-### 2. Start the Server & Database
-Start the NodeJS API and the Chroma vector database in the background:
+Open `.env` and fill in your API keys and configuration:
+- `OPENROUTER_API_KEY`: Get from [OpenRouter](https://openrouter.ai/)
+- `OPENAI_API_KEY`: Required for LangChain embeddings.
+- `CHROMA_TENANT`, `CHROMA_DATABASE`, `CHROMA_API_KEY`: Get from [Chroma Cloud](https://www.trychroma.com/)
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Start the Server
+You can run the server locally or using Docker.
+
+**Local Development:**
+```bash
+npm start
+```
+
+**Docker Deployment:**
 ```bash
 docker compose up --build -d
 ```
-*Note: This will install dependencies, build the RAG server image (`local-rag`), and expose the API on port `3500`.*
+*Note: This will expose the API on port `3500`.*
 
-### 3. Ingest your Data
-Before your AI can answer questions about your data, you must turn your documents into vector embeddings.
-Add your `.txt` files into the `./data` folder, then run the ingestion script through Docker:
+### 4. Ingest your Data
+Add your `.txt` files into the `./data` folder, then run the ingestion script:
 
+**Local:**
 ```bash
-docker exec -it local-rag node ingest.js
+node ingest.js
 ```
-*If everything was successful, it will declare "✅ All data ingested successfully!".*
+
+**Docker:**
+```bash
+docker exec -it server-rag node ingest.js
+```
 
 ---
 
 ## 🧠 Usage
-Your newly started RAG server API is available at `http://localhost:3500`. 
+The RAG server API is available at `http://localhost:3500`. 
 Send a POST request to query it:
 
 ```bash
@@ -47,29 +70,9 @@ curl -X POST http://localhost:3500/chat \
      -d '{"query": "What is OpenClaw?"}'
 ```
 
-*(You can also use the local `node query.js` file if you have Node installed on your host machine to run quick tests).*
-
 ---
 
-## 🛠️ Installing Ollama & Models
-
-If you don't have Ollama installed on your system yet, follow these steps:
-
-### 1. Install Ollama
-**For Linux/WSL2:**
-Run the following curl command in your terminal:
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-```
-
-**For macOS/Windows:**
-Download the installer directly from the [Ollama website](https://ollama.com/download).
-
-### 2. Install the Mistral Model
-Once Ollama is installed and running, you must download the `mistral` model (which this RAG server uses for generating answers).
-
-Open your terminal and run:
-```bash
-ollama run mistral
-```
-*(Depending on your internet connection, this ~4GB download may take a few minutes. Once it completes, you can exit the chat prompt or keep it running in the background).*
+## 🛠️ Configuration
+You can customize the models used by editing your `.env` file:
+- `OPENROUTER_EMBEDDING_MODEL`: Default is `text-embedding-3-small`
+- `OPENROUTER_LLM_MODEL`: Default is `meta-llama/llama-3-8b-instruct:free`
