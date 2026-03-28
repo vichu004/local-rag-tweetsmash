@@ -1,0 +1,34 @@
+TweetSmash - Core Features
+
+TweetSmash is a tool to curate, organize, read, and export Twitter/X bookmarks.
+
+Key Features:
+
+1. Data Ingestion:
+- Works using a Chrome Extension
+- Extracts bookmarks, threads, and media
+- Syncs data from Twitter to Tweetsmash database
+
+2. AI Chat:
+- Press Cmd + K to chat with bookmarks
+- Supports GPT, Claude, Gemini
+- Can summarize threads and extract insights
+
+3. Smart Folders:
+- Auto-organizes bookmarks using rules
+- Based on authors, keywords, and trends
+
+4. Keyboard Shortcuts:
+- J / K → Navigate tweets
+- Tab + R → Mark as read
+- A → Archive
+
+5. Email Digests:
+- Daily or weekly curated bookmark summaries
+
+6. Export Features:
+- Export to Notion, Google Sheets, PDF, Zotero
+
+7. Bookmark Safety:
+- All bookmarks are backed up
+- Safe even if Twitter deletes them

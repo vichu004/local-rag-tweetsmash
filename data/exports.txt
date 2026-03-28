@@ -1,0 +1,25 @@
+Export Features
+
+TweetSmash supports multiple export options:
+
+1. Notion:
+- Auto-sync bookmarks
+- Includes threads and media
+
+2. Google Sheets:
+- Export tweets as rows
+- Auto-sync new bookmarks
+
+3. PDF Export:
+- Export tweets and threads
+- Includes:
+  - Images
+  - Videos
+  - Links
+
+4. Zotero:
+- Sync research content
+- Useful for academic work
+
+5. Newsletter:
+- Convert bookmarks into newsletters

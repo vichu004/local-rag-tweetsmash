@@ -1,0 +1,16 @@
+Integrations
+
+1. Chrome Extension:
+- Required for syncing bookmarks
+
+2. Notion:
+- Auto-sync bookmarks into database
+
+3. Google Sheets:
+- Real-time data export
+
+4. Zotero:
+- Sync research papers
+
+5. Email:
+- Digest delivery system

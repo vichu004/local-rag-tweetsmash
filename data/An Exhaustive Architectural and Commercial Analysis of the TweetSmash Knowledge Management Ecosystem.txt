@@ -1,0 +1,62 @@
+﻿An Exhaustive Architectural and Commercial Analysis of the TweetSmash Knowledge Management Ecosystem
+1. Product Overview & Core Features
+TweetSmash is a specialized tool designed to curate, organize, read, and export Twitter/X bookmarks. It acts as a bridge between Twitter's native interface and external productivity tools, solving the problem of "information hoarding."
+* Data Ingestion: Operates primarily via a Chrome Extension.1 It securely extracts bookmarks, unrolls threads, and captures media directly from the user's active browser session.1
+* Keyboard Navigation: Optimized for fast triaging (J for down, K for up, Tab+R to mark as read, A to archive).2
+* Smart Folders & Auto-Organization: Automatically routes bookmarks based on custom rules (specific authors, keyword combinations, viral metrics).3
+* AI Integration: Users can press Cmd+K to chat with their bookmarks using advanced AI models (supporting GPT, Claude, Gemini, etc.) to summarize threads or extract specific insights.4
+* Email Digests & ListX: Users can schedule daily or weekly email digests of specific bookmark folders or curated Twitter Lists to consume content without scrolling the native feed.
+2. Pricing, Trials, & Account Management
+The platform utilizes a structured freemium and premium tier model.3
+Subscription Tiers
+* Reader Pass ($14/month): Includes AI chat, email digests, newsletter creation, smart folder organization, PDF exports, and unlimited automated routing to Notion, Sheets, and Zotero.3
+* Yearly Pass ($99/year): Includes all Reader Pass features at a roughly 25% annualized discount.3
+* Exports Only ($49 one-time): Designed for users permanently migrating off Twitter. Grants one-time, comprehensive access to all export integrations to back up historical data.3
+* Believer Pass ($198 lifetime): Includes all premium features permanently, plus priority customer support and first access to beta features.3
+Trials, Downgrades, & Refunds
+* Free Trial: 7-day free trial on the Reader Pass.3
+* Downgrade Protocol: If a user does not upgrade post-trial, the account is downgraded to a "Basic Access" state. This state heavily restricts full-text search depth, thread unrolling, and export limits.3
+* Standard Refund Policy: Full refunds are offered within 7 days of purchase.6 Refunds may be denied for ToS violations, fraudulent/excessive API usage, or requests made after the 7-day window.6
+* API Interruption Refund Policy: If unexpected Twitter API changes break core premium features (such as the ListX digest), affected users are entitled to a full refund within 14 days of the disruption, or a prorated refund thereafter.
+3. Integrations & Setup
+* Chrome Extension: The 157KiB extension is required for reliable import. It syncs the entire historical catalog of bookmarks and ensures auto-sync for future bookmarks.1
+* Notion Sync: A zero-code, 5-minute setup. The engine unrolls threads, groups replies, and ports media directly into Notion databases.7
+* Google Sheets: Offers a fully automated API connection for real-time row updates, or a manual CSV export for strict corporate privacy.8
+* Zotero: Zero-configuration sync specifically designed for academic and scientific researchers to port Twitter research threads into Zotero citation libraries.
+4. Data Privacy, Security, & Governance
+* Data Safety: If the native Twitter platform goes down or experiences data loss, user bookmarks are safe. All bookmarks are backed up to Tweetsmash's database upon initial sync.3
+* Extension Privacy: The Chrome extension strictly processes only the bookmark data payload. No direct messages or passwords are read or transmitted.1
+* Data Deletion: Users have the "Right to Erasure" under GDPR and CCPA.6 Data deletion can be triggered in-app or by emailing hello@tweetsmash.com. All personal data is wiped from servers within 48 hours of the request.
+5. Troubleshooting & Common Customer Problems (RAG Knowledge Base)
+Problem: Disappearing Twitter Bookmarks / Twitter Native Limits
+* Customer Complaint: Users report that older bookmarks are disappearing from the native Twitter app, or they are hitting a hidden limit where old bookmarks are removed when new ones are added.
+* Solution: Advise the user that this is a known native Twitter limitation/glitch. By installing the Tweetsmash Chrome extension, all bookmarks are fetched and securely backed up to the Tweetsmash database. Once synced, they remain safe in Tweetsmash even if Twitter deletes them natively.
+Problem: Chrome Extension Not Syncing / Background API Failures
+* Customer Complaint: Bookmarks are not syncing automatically, or the API connection seems broken.
+* Solution: Twitter severely restricted its native API in 2023, making regular background API syncing unreliable. Users must use the official Chrome extension. Instruct the user to ensure the extension is active, and if background auto-sync fails, manually navigate to the Twitter Bookmarks page and click the injected 'Sync to Tweetsmash' button.
+Problem: Notion Sync Fails to Format Correctly or Fails to Connect
+* Customer Complaint: When setting up Notion, the database isn't populating, or the formatting is broken.
+* Solution: During the initial Notion OAuth authorization popup, the user must explicitly select the checkbox that says "Use a template provided by this developer." If this is not selected, the necessary relational database schema will not align, and the export will fail.7
+Problem: Unable to Find Old Bookmarks due to Endless Scrolling
+* Customer Complaint: The user has thousands of bookmarks and cannot find older content.
+* Solution: Direct the user to the Tweetsmash web app interface. Explain that unlike Twitter, Tweetsmash features a full-text search engine (which searches the content of the tweets), intuitive sorting to view oldest bookmarks first, and the ability to filter by custom tags/labels.
+Problem: Accidental Deletion or Cluttered Inbox
+* Customer Complaint: A user accidentally marked an important tweet as "Read" or wants to hide tweets without deleting them permanently.
+* Solution: If a tweet is accidentally marked as read, the user can press Shift + R to undo the action.2 To declutter without deleting, instruct them to use the Archive feature (Shortcut: A), which removes the tweet from the main explore feed but retains it safely in the database.2
+Problem: User Wants to Manage LinkedIn Saved Posts
+* Customer Complaint: The user asks if Tweetsmash supports LinkedIn.
+* Solution: Tweetsmash is exclusively for X/Twitter. However, direct the user to the company's sister product, Linkedmash (https://www.linkedmash.com/), which provides the exact same curation and export functionalities tailored for LinkedIn.3
+6. Support Contact Vectors
+For all unresolved technical issues, refund requests, or data deletion mandates, customers should be directed to:
+* Email: support@tweetsmash.com 3 or hello@tweetsmash.com.6
+* Twitter/X: Support is also provided via Direct Message to the official Tweetsmash account or the founders' accounts.3
+* SLA: The support team aims to respond to all inquiries within 2 business days.6
+Works cited
+1. TweetsMash - Chrome Web Store, accessed March 25, 2026, https://chromewebstore.google.com/detail/tweetsmash/fmjgfjanmcbhpmlemahbnfehjoboopce
+2. How to Manage Your Twitter Bookmarks Using Tweetsmash, accessed March 25, 2026, https://www.tweetsmash.com/resources/manage-your-twitter-bookmarks
+3. Pricing | Tweetsmash, accessed March 25, 2026, https://www.tweetsmash.com/pricing
+4. Tweetsmash: Turn your X ( Twitter ) Bookmarks into knowledge digests, accessed March 25, 2026, https://www.tweetsmash.com/
+5. trungdq88/Awesome-Black-Friday-Cyber-Monday: Awesome apps, software, and SaaS deals on Black Friday. - GitHub, accessed March 25, 2026, https://github.com/trungdq88/Awesome-Black-Friday-Cyber-Monday
+6. Terms of service, accessed March 25, 2026, https://www.tweetsmash.com/terms
+7. How to Export Twitter Bookmarks to Notion - Tweetsmash, accessed March 25, 2026, https://www.tweetsmash.com/resources/how-to-export-twitter-bookmarks-to-notion
+8. How to Export Twitter Bookmarks to Google Sheets - Tweetsmash, accessed March 25, 2026, https://www.tweetsmash.com/resources/how-to-export-twitter-bookmarks-to-sheets

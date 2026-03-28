@@ -1,0 +1,24 @@
+Search Features
+
+TweetSmash provides advanced search capabilities:
+
+1. Full-text search:
+- Search inside tweet content
+
+2. Author search:
+- Find tweets from specific authors
+
+3. Filters:
+- Tweet type (thread, media)
+- Year
+- Labels
+- Keywords
+
+4. Exclusion search:
+- Example: "AI !ChatGPT"
+
+5. Multilingual support:
+- Works across multiple languages
+
+6. Sorting:
+- View oldest or newest bookmarks

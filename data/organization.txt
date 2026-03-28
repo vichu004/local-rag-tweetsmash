@@ -1,0 +1,29 @@
+
+Bookmark Organization
+
+TweetSmash organizes bookmarks using:
+
+1. Smart Folders:
+- Auto categorization
+- Based on:
+  - Authors
+  - Keywords
+  - Tags
+
+2. Folder Features:
+- Custom folders
+- Auto-routing rules
+- Tag-based grouping
+
+3. Auto Organization:
+- Viral tweets
+- Recent bookmarks
+- Topic-based clustering
+
+4. Thread Handling:
+- Full thread unrolling
+- Replies grouped together
+
+5. Archive System:
+- Archive tweets without deleting
+- Keeps UI clean

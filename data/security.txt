@@ -1,0 +1,17 @@
+Security & Privacy
+
+1. Data Protection:
+- Bookmarks are backed up securely
+
+2. Extension Privacy:
+- Only reads bookmark data
+- Does NOT access:
+  - Passwords
+  - Messages
+
+3. Compliance:
+- GDPR compliant
+- CCPA compliant
+
+4. Data Deletion:
+- Full deletion available on request

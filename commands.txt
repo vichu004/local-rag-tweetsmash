@@ -9,3 +9,5 @@ to check test the rag pipeline
 for running the database ( imp : before this command don't forget to activate the py-env created )
 
 command : " chroma run --path ./chroma_data "
+
+

@@ -1,0 +1,14 @@
+AI Features in TweetSmash
+
+- Chat with bookmarks using AI
+- Trigger using Cmd + K
+- Supports multiple models (GPT, Claude, Gemini)
+
+Capabilities:
+- Summarize long threads
+- Extract key insights
+- Answer questions based on saved tweets
+- Analyze writing styles
+
+Use Case:
+Users can treat bookmarks like a knowledge base and query them like ChatGPT.

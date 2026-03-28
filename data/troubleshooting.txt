@@ -1,0 +1,108 @@
+Common Issues & Solutions
+
+1. Missing Bookmarks:
+Problem:
+- Twitter removes old bookmarks
+
+Solution:
+- Use Tweetsmash extension to back them up
+
+2. Sync Issues:
+Problem:
+- Bookmarks not syncing
+
+Solution:
+- Ensure Chrome extension is active
+- Manually click "Sync to Tweetsmash"
+
+3. Notion Export Issues:
+Problem:
+- Data not syncing properly
+
+Solution:
+- Select "Use template provided by developer"
+
+4. Cannot Find Old Bookmarks:
+Solution:
+- Use full-text search
+- Use filters and sorting
+
+5. Accidental Actions:
+- Shift + R → Undo read
+- Shift + A → Unarchive
+
+6. Clutter:
+- Use Archive instead of delete
+
+Source: tweetsmash.com and reddit.com
+
+Q: How can I revert a tweet to unread if I marked it as read by mistake?
+A: Simply click the tweet again or press **Shift + R**. This will revert the tweet back to unread status【34†L1-L4】.
+
+Q: How do I hide (archive) a bookmarked tweet without deleting it?
+A: Use the **Archive** feature to temporarily hide it (press **A** to archive and **Shift + A** to unarchive). Archived tweets are moved to the Archive section【36†L7-L10】.
+
+Q: How do I delete an outdated or unwanted bookmark?
+A: Click on the **delete** (trash) icon next to the tweet. Tweetsmash will instantly remove it from both your Tweetsmash account and your Twitter bookmarks【39†L72-L73】.
+
+Q: What if I accidentally delete a tweet on Twitter – will I lose it in Tweetsmash too?
+A: No. Tweetsmash keeps all bookmarked tweets backed up. Even if a tweet is deleted on Twitter, it remains safely stored in your Tweetsmash account【39†L114-L119】.
+
+Q: Are my bookmarks automatically backed up by Tweetsmash?
+A: Yes. Tweetsmash automatically saves and backs up all your Twitter bookmarks, so you never lose important content【39†L124-L131】.
+
+Q: How can I save my bookmarks permanently if Twitter shuts down?
+A: Connect your Twitter account to Tweetsmash and sync all bookmarks. From there, export them to Notion or Google Sheets for permanent storage【27†L211-L214】【49†L103-L107】.
+
+Q: Does the free Notion plan allow exporting bookmarks to PDF/CSV/HTML?
+A: Yes. After syncing bookmarks to Notion with Tweetsmash, the free Notion plan imposes no limit on exporting the database to PDF or CSV【27†L233-L237】.
+
+Q: Why are only 20 bookmarks exporting to Notion instead of all of them?
+A: The free Tweetsmash plan only syncs the first 20 bookmarks to Notion. Upgrading to a paid plan removes this limitation【19†L19-L20】.
+
+Q: How can I bypass Twitter’s 800-bookmark API limit to access older bookmarks?
+A: Unfortunately, even Twitter Blue subscribers cannot bypass this limit. Tweetsmash relies on Twitter’s API, which caps bookmarks at 800【27†L254-L260】.
+
+Q: How do I connect my Twitter account to Tweetsmash for syncing?
+A: Go to the Tweetsmash dashboard and click **Connect Twitter**. Authorize Tweetsmash to access your Twitter bookmarks; the extension will then import all your existing bookmarks【49†L61-L64】.
+
+Q: How can I export all my bookmarks into Google Sheets?
+A: On the Google Sheets Sync page, click **Connect your Google account** and follow the prompts. After linking, click **View in Sheets** to open your exported bookmarks (with media links and folder names) in Google Sheets【49†L71-L79】【49†L95-L98】.
+
+Q: Will new bookmarks auto-sync to Google Sheets?
+A: Yes. Once connected, Tweetsmash’s auto-sync ensures every new Twitter bookmark automatically populates into your linked Google Sheet【49†L103-L107】.
+
+Q: What if I don’t want to share my Google account with Tweetsmash?
+A: Use the **Manual Connection** method: copy the provided Google Sheets template, share it with the given Tweetsmash email (granting edit access), and then verify in Tweetsmash. This sets up the export without handing over login credentials【49†L88-L92】.
+
+Q: How do I export bookmarks as a PDF file?
+A: In Tweetsmash, filter or select the tweets you want, click **Export tweet results**, and choose **Export as PDF**. The system will prepare a ZIP of PDFs which you can download and unzip【41†L63-L70】.
+
+Q: What’s included in the exported PDF of bookmarks?
+A: The PDF export includes **fully unrolled tweet threads**, all attached images and videos, and **clickable links**. Every bookmarked tweet and its media are captured in the PDF【42†L1-L4】.
+
+Q: How do I sync my bookmarks to Notion?
+A: In the integrations page, toggle **Notion** to ON and authorize access (choose “Use a template provided by this developer” when prompted). Tweetsmash will then begin exporting your bookmarks to a Notion database【44†L75-L84】.
+
+Q: What will my bookmarks look like in Notion after syncing?
+A: Bookmarks are imported as rows in a Notion database. Tweet threads are fully unrolled, media (images/videos) are included, and replies in the same conversation are grouped together for context【44†L84-L89】.
+
+Q: Will future bookmarks sync to Notion automatically?
+A: Yes. After the initial export, auto-sync is enabled by default. Any new bookmark you save on Twitter will automatically be added to your Notion database【44†L93-L97】.
+
+Q: How can I quickly find a specific bookmark in Tweetsmash?
+A: Use Tweetsmash’s **full-text search** and built-in filters. It can search across all tweet text (even in different languages), authors, dates, etc., making it easy to locate any saved tweet【39†L105-L110】.
+
+Q: What keyboard shortcuts help navigate bookmarks in Tweetsmash?
+A: Use **J** (or Down Arrow) to move down the list and **K** (or Up Arrow) to move up【52†L1-L4】. 
+
+Q: How do I mark a tweet as read?
+A: Click the **Mark as Read** button on the tweet or press **Tab + R** to mark it as read via keyboard【53†L1-L4】.
+
+Q: How can I chat with my bookmarks using AI?
+A: Press **Cmd + K** to open the AI chat window where you can ask questions about your saved bookmarks【54†L1-L3】.
+
+Q: How do I create a Smart Folder to auto-categorize bookmarks by author or tag?
+A: In the folder settings, create a Smart Folder and add rules (e.g., a list of authors or keywords). Tweetsmash will automatically send any bookmark matching those rules into that folder【56†L86-L90】.
+
+```
