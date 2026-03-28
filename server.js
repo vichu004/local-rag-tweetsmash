@@ -95,6 +95,6 @@ ${query}
   }
 });
 
-app.listen(3500, () => {
-  console.log("🚀 RAG server running on port 3500");
+app.listen(3600, () => {
+  console.log("🚀 RAG server running on port 3600");
 });
